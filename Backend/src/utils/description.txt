@@ -1,0 +1,1 @@
+This folder will include all those functions which are used more than once in the Node Js project
