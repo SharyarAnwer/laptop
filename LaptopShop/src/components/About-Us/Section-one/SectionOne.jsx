@@ -9,7 +9,7 @@ export default function SectionOne() {
   return (
     <div>
 
-      <h1 className='text-lg font-bold mb-4 px-4 ' >About Us</h1>
+      <h1 className='text-lg font-bold mb-4 px-4' >About Us</h1>
 
       <picture className="w-full h-auto">
         {/* Specify the different image sources */}

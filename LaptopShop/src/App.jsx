@@ -26,7 +26,10 @@ import ShoppingCart from "./pages/Shopping-Cart/ShoppingCart";
 import Checkout from "./pages/Checkout/Checkout";
 
 import UserAccount from "./pages/User-Account/UserAccount";
+
 import AboutUs from "./pages/About-Us/AboutUs";
+
+import FAQ from "./pages/FAQ/FAQ";
 
 function App() {
   return (
@@ -58,6 +61,8 @@ function App() {
           <Route path="/user-account" element={<UserAccount/>} />
 
           <Route path="/about-us" element={<AboutUs/>} />
+
+          <Route path="/faq" element={<FAQ/>} />
 
         </Routes>
       </Provider>
