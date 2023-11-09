@@ -9,7 +9,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 // These imports are from Redux store
 // toggleView is a reducer in Redux store. It saves that the products should be shown in list view or grid view 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleView } from "../../../redux/ProductViewSlice";
 // These above imports are from Redux store
 

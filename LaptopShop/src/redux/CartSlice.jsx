@@ -5,14 +5,20 @@ const cartSlice  = createSlice({
     name : "Cart",
     initialState : {
 
-        cart : []
+        cart : {
+
+            items : 0,
+
+        }
 
     },
     reducers : {
 
         addToCart : (state , action) => {
 
-            state.cart.push(action.payload)
+            console.log(state)
+            console.log(action)
+            console.log(state.cart.items)
 
         }
     }

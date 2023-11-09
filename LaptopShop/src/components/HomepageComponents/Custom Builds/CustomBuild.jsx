@@ -7,6 +7,7 @@ import axios from "axios";
 import FourCategoriesCard from "../FourCategoriesCard/FourCategoriescard";
 
 export default function CustomBuild() {
+  
   const [products, setProducts] = useState([]);
 
   //This useEffect will fetch products and then they will be sent as a prop to Categories Card
@@ -22,6 +23,7 @@ export default function CustomBuild() {
         const response = await axios.post(
           "http://localhost:5000/products/get-product",
           {
+            Category: "Custom Build",
             signal: controller.signal,
           }
         );

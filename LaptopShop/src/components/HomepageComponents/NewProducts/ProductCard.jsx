@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import AspectRatio from "@mui/joy/AspectRatio";
 import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
@@ -9,25 +11,55 @@ import Typography from "@mui/joy/Typography";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Rating from "@mui/material/Rating";
 
+import axios from "axios";
+
 export default function ProductCard() {
+
+  const [newProducts, setNewProducts] = useState([]);
+
+  const url = "http://localhost:5000/products/get-new-products";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+
+        setNewProducts(response.data.response);
+
+        console.log(newProducts);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="flex items-center justify-center flex-wrap gap-7 mt-7 ">
       {Array(4)
         .fill(1)
-        .map((index) => (
-            <Card sx={{ width: 250, maxWidth: "100%", boxShadow: "lg" }}>
-              <CardOverflow>
-                <AspectRatio sx={{ minWidth: 200 }}>
+        .map((element, index) => (
+          <Card sx={{ width: 250, maxWidth: "100%", boxShadow: "lg" }}>
+            <CardOverflow>
+              <AspectRatio sx={{ minWidth: 200 }}>
+                {newProducts.length > 0 && (
                   <img
-                    src="https://images.unsplash.com/photo-1593121925328-369cc8459c08?auto=format&fit=crop&w=286"
-                    srcSet="https://images.unsplash.com/photo-1593121925328-369cc8459c08?auto=format&fit=crop&w=286&dpr=2 2x"
+                    src={newProducts[index].Picture}
+                    srcSet={newProducts[index].Picture}
                     loading="lazy"
                     alt=""
                   />
-                </AspectRatio>
-              </CardOverflow>
-              <CardContent>
-                <Typography level="body-xs">Bluetooth Headset</Typography>
+                )}
+              </AspectRatio>
+            </CardOverflow>
+            <CardContent>
+              {newProducts.length > 0 && (
+                <Typography level="body-xs">
+                  {newProducts[index].Category}
+                </Typography>
+              )}
+              {newProducts.length > 0 && (
                 <Link
                   href="#product-card"
                   fontWeight="md"
@@ -36,9 +68,11 @@ export default function ProductCard() {
                   overlay
                   endDecorator={<ArrowOutwardIcon />}
                 >
-                  Super Rockez A400
+                  {newProducts[index].Name}
                 </Link>
+              )}
 
+              {newProducts.length > 0 && (
                 <Typography
                   level="title-lg"
                   sx={{ mt: 1, fontWeight: "xl" }}
@@ -53,21 +87,32 @@ export default function ProductCard() {
                     </Chip>
                   }
                 >
-                  $ 499.00
+                  Rs {newProducts[index].Price}
                 </Typography>
+              )}
+              {newProducts.length > 0 && (
                 <Typography level="body-sm">
-                  (Only <b>7</b> left in stock!)
+                  (Only <b>{newProducts[index]?.Quantity}</b> left in stock!)
                 </Typography>
-              </CardContent>
+              )}
+            </CardContent>
 
-              <Rating name="read-only" value={4} readOnly />
+            {(newProducts.length > 0) && <Rating
+              name="read-only"
+              value={newProducts[index]?.Rating}
+              readOnly
+            />}
 
-              <CardOverflow>
-                <Button variant="solid" size="lg" sx={{ bgcolor: "#0156FF" }}>
-                  Add to cart
-                </Button>
-              </CardOverflow>
-            </Card>
+            <CardOverflow>
+              <Button variant="solid" size="lg" sx={{ bgcolor: "#0156FF" }} onClick={() => {
+
+                alert("Item added to cart")
+              }}>
+                Add to cart
+              </Button>
+            </CardOverflow>
+
+          </Card>
         ))}
     </div>
   );

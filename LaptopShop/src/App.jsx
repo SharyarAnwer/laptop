@@ -35,6 +35,7 @@ function App() {
   return (
     <div>
       <Provider store={Store}>
+        
         <Navbar />
 
         <Routes>

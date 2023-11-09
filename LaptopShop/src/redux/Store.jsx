@@ -9,6 +9,7 @@ const store = configureStore({
         productView : ProductViewSlice
 
     }
+    
 })
 
 export default store

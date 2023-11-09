@@ -23,6 +23,7 @@ import Contact from "../../components/HomepageComponents/Contact Section/Contact
 import Footer from "../../components/Footer/Footer";
 
 export default function Homepage() {
+  
   return (
     <div>
       

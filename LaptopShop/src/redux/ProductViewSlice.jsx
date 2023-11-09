@@ -25,4 +25,5 @@ const productViewSlice  = createSlice({
 })
 
 export default productViewSlice.reducer
+
 export const {toggleView} = productViewSlice.actions

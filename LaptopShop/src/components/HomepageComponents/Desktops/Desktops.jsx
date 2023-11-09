@@ -1,10 +1,49 @@
-import React from "react";
+import React , { useState, useEffect } from "react";
 
 import SubCategoryBanner from "../Sub Category Banner/SubCategoryBanner";
 
 import FourCategoriesCard from "../FourCategoriesCard/FourCategoriescard";
 
+import axios from "axios";
+
 export default function Desktops() {
+
+  const [products, setProducts] = useState([]);
+
+  //This useEffect will fetch products and then they will be sent as a prop to Categories Card
+  useEffect(() => {
+
+    const fetchProduct = async () => {
+
+      try {
+
+        //Axios requests can continue to run in the background even after the component unmounts.
+        const controller = new AbortController();
+
+        const response = await axios.post(
+          "http://localhost:5000/products/get-product",
+          {
+            Category: "Desktops",
+            signal: controller.signal,
+          }
+        );
+
+        setProducts(response.data.response);
+        
+        //This is a clean up function. After the data has been received, tell the server to stop processing the request.
+        return () => {
+          controller.abort();
+        };
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchProduct();
+    
+  }, []);
+
   return (
     <>
       <div className="mt-4 hover:cursor-pointer hidden md:flex md:gap-4 px-4">
@@ -52,7 +91,7 @@ export default function Desktops() {
           </div>
         </div>
 
-        <FourCategoriesCard />
+        <FourCategoriesCard products={products} />
       </div>
     </>
   );
