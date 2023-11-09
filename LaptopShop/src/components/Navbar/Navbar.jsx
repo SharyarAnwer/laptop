@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import Logo from "./Logo.svg";
-
 import MobileLogo from "./MobileLogo.svg";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -38,9 +36,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 // The above imports are related to the sidebar
 
-import TextField from "@mui/material/TextField";
+//Retrieve from the store how many items have been added to the cart
+import { useSelector } from "react-redux";
+import MyAccount from "./MyAccount/MyAccount";
+//Retrieve from the store how many items have been added to the cart
 
 export default function Navbar() {
+  //Retrieve from the store how many items have been added to the cart
+  const itemsInCart = useSelector((state) => state.cart.cart.items);
+
   //This shows if I need to show shop timing or not
   const [showShop, setShowShop] = useState(false);
 
@@ -57,6 +61,9 @@ export default function Navbar() {
 
   // This state will track when to show the text search field on lapto devices
   const [showSearch, setShowSearch] = useState(false);
+
+  // show my account details
+  const [showAccount, setShowAccount] = useState(false);
 
   return (
     <>
@@ -88,6 +95,7 @@ export default function Navbar() {
           <DropDownMenu />
         </div>
 
+        {/* This is the second header or the navbar */}
         <div className="relative z-10 px-3 bg-[#0156FF] py-3 flex flex-col gap-3 lg:px-9">
           <div className="flex items-center justify-between">
             <div onClick={toggleSidebar} className="lg:hidden">
@@ -105,7 +113,6 @@ export default function Navbar() {
             </picture>
 
             <nav className="lg:flex gap-2 items-center">
-
               <ul className="hidden font-semibold text-sm lg:flex gap-3 justify-between xl:gap-5 ">
                 <li>Laptops</li>
 
@@ -128,24 +135,35 @@ export default function Navbar() {
             </nav>
 
             <div className="flex flex-row items-center gap-4 ">
+              <input
+                className={`${
+                  showSearch ? "w-[50%] px-4 py-6" : "w-0"
+                } absolute right-40 z-50 h-10 rounded-3xl transition-width duration-500 flex items-center`}
+              />
 
-                <input className={`${showSearch ? "w-[50%] px-4 py-6" : "w-0"} absolute right-40 z-50 h-10 rounded-3xl transition-width duration-500 flex items-center`} />
+              <div
+                onClick={() => {
+                  setShowSearch(!showSearch);
+                }}
+                className="hidden lg:block"
+              >
+                {!showSearch ? <SearchIcon /> : <CloseIcon />}
+              </div>
 
-                <div
-                  onClick={() => {
-                    setShowSearch(!showSearch);
-                  }}
-
-                  className="hidden lg:block"
-                >
-                  {!showSearch ? <SearchIcon /> : <CloseIcon />}
-                </div>
-
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={itemsInCart} color="secondary">
                 <ShoppingCartIcon color="action" />
               </Badge>
 
-              <Avatar alt="Profile picture" src={Man} />
+              <div className="relative">
+                <div
+                  onClick={() => {
+                    setShowAccount(!showAccount);
+                  }}
+                >
+                  <Avatar alt="Profile picture" src={Man} />
+                </div>
+                {showAccount && <MyAccount />}
+              </div>
             </div>
           </div>
 

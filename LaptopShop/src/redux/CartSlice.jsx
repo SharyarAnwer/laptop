@@ -8,6 +8,7 @@ const cartSlice  = createSlice({
         cart : {
 
             items : 0,
+            products : []
 
         }
 
@@ -16,9 +17,9 @@ const cartSlice  = createSlice({
 
         addToCart : (state , action) => {
 
-            console.log(state)
-            console.log(action)
-            console.log(state.cart.items)
+            state.cart.items = state.cart.items + action.payload.items
+
+            state.cart.products.push(action.payload.product)
 
         }
     }
