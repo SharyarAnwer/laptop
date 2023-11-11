@@ -67,7 +67,8 @@ export default function GamingMonitors() {
       <div className="px-4 mt-4 flex flex-col md:flex-row md:gap-6 overflow-x-hidden ">
         <div className="flex flex-col md:flex-col-reverse">
           <SubCategoryBanner
-            heading="Desktops"
+            heading="Gaming Monitors"
+            category="Gaming Monitors"
             backgroundImageMobile="bg-gaming-monitors-mobile"
             backgroundImageTablet="md:bg-gaming-monitors-tablet"
           />

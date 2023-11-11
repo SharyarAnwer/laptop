@@ -6,7 +6,8 @@ import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Chip from "@mui/joy/Chip";
-import Link from "@mui/joy/Link";
+import { Link } from "react-router-dom";
+// import Link from "@mui/joy/Link";
 import Typography from "@mui/joy/Typography";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Rating from "@mui/material/Rating";
@@ -18,6 +19,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/CartSlice";
 
 export default function ProductCard() {
+  
   const [newProducts, setNewProducts] = useState([]);
 
   const url = "http://localhost:5000/products/get-new-products";
@@ -27,9 +29,7 @@ export default function ProductCard() {
       try {
         const response = await axios.get(url);
 
-        setNewProducts(response.data.response);
-
-        console.log(newProducts);
+        setNewProducts(response.data.response.slice(1, 5));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -43,8 +43,8 @@ export default function ProductCard() {
 
   const addItemsToCart = (itemToBeAdded) => {
 
-    dispatch(addToCart({ items: 1 , product : itemToBeAdded }));
-    
+    dispatch(addToCart({ items: 1, product: itemToBeAdded }));
+
   };
 
   return (
@@ -70,16 +70,16 @@ export default function ProductCard() {
               </Typography>
             )}
             {newProducts.length > 0 && (
-              <Link
-                href="#product-card"
-                fontWeight="md"
-                color="neutral"
-                textColor="text.primary"
-                overlay
-                endDecorator={<ArrowOutwardIcon />}
-              >
-                {newProducts[index].Name}
-              </Link>
+              <div className="flex items-center">
+                <Link
+                  to="/about-product"
+                  className="font-semibold text-black"
+                  state={{ product: element }}
+                >
+                  {newProducts[index].Name}
+                </Link>
+                <ArrowOutwardIcon sx={{ color: "black" }} />
+              </div>
             )}
 
             {newProducts.length > 0 && (

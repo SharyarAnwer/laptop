@@ -70,7 +70,7 @@ router.get("/get-new-products", async (req, res) => {
         $gte: oneWeekAgo.toISOString(),
         $lte: new Date().toISOString(),
       },
-    }).limit(4)
+    })
 
     res.json({ response: recentProducts });
 

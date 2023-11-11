@@ -22,21 +22,21 @@ export default function AboutDetailsSpecs(prop) {
           className={`min-w-full duration-500`}
           style={{ transform: `translateX(${-prop.translation}%)` }}
         >
-          <About />
+          <About product={prop.product} />
         </div>
 
         <div
           className={`min-w-full duration-500`}
           style={{ transform: `translateX(${-prop.translation}%)` }}
         >
-          <Detail />
+          <Detail product={prop.product} />
         </div>
 
         <div
           className={`min-w-full duration-500`}
           style={{ transform: `translateX(${-prop.translation}%)` }}
         >
-          <Spec />
+          <Spec product={prop.product} />
         </div>
       </div>
 
@@ -52,7 +52,7 @@ export default function AboutDetailsSpecs(prop) {
       </div>
 
       <div className="md:hidden">
-        <Pricing />
+        <Pricing product={prop.product} />
       </div>
     </div>
   );

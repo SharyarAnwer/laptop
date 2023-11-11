@@ -14,25 +14,30 @@ import Heart from "./Heart.svg";
 import Message from "./Message.svg";
 import Analysis from "./Analytics.svg";
 
-export default function About() {
+export default function About(prop) {
+
   return (
     <div className="px-4 relative">
       <div className=" flex items-center justify-center">
         <picture>
           {/* Specify the different image sources */}
-          <source srcSet={productPictureDesktop} media="(min-width: 1024px)" />
+          {/* <source srcSet={productPictureDesktop} media="(min-width: 1024px)" />
           <source srcSet={productPictureTablet} media="(min-width: 768px)" />
-          <source srcSet={productPictureMobile} />
+          <source srcSet={productPictureMobile} /> */}
+          <source srcSet={prop.product.Picture} media="(min-width: 1024px)" />
+          <source srcSet={prop.product.Picture} media="(min-width: 768px)" />
+          <source srcSet={prop.product.Picture} />
 
           {/* The default <img> element is displayed if no source matches */}
           <img
-            src={productPictureDesktop}
+            // src={productPictureDesktop}
+            src={prop.product.Picture}
             alt="Picture of the selected product"
           />
         </picture>
       </div>
 
-      <div className="flex items-center justify-center gap-2 ">
+      <div className="flex items-center justify-center gap-2 md:pb-4">
         <picture>
           {/* Specify the different image sources */}
           <source srcSet={ZipLogoDesktop} media="(min-width: 1024px)" />

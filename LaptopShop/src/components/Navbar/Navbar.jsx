@@ -21,11 +21,8 @@ import Man from "./man.svg";
 //
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
-import Sidebar from "./Sidebar/Sidebar";
 //
 
 // These imports are related to the sidebar
@@ -40,6 +37,10 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useSelector } from "react-redux";
 import MyAccount from "./MyAccount/MyAccount";
 //Retrieve from the store how many items have been added to the cart
+
+// Adding links to Navbar using react-router-dom
+import { Link } from "react-router-dom";
+// Adding links to Navbar using react-router-dom
 
 export default function Navbar() {
   //Retrieve from the store how many items have been added to the cart
@@ -114,19 +115,45 @@ export default function Navbar() {
 
             <nav className="lg:flex gap-2 items-center">
               <ul className="hidden font-semibold text-sm lg:flex gap-3 justify-between xl:gap-5 ">
-                <li>Laptops</li>
+                <Link
+                  to="/products"
+                  state={{ category: "MSI-Laptops" }}
+                  className="cursor-pointer"
+                >
+                  Laptops
+                </Link>
 
-                <li>Desktop PCs</li>
+                <Link
+                  to="/products"
+                  state={{ category: "Desktops" }}
+                  className="cursor-pointer"
+                >
+                  Desktop PCs
+                </Link>
 
-                <li>Networking Devices</li>
+                <Link
+                  to="/products"
+                  state={{ category: "Custom Build" }}
+                  className="cursor-pointer"
+                >
+                  Custom Builds
+                </Link>
 
-                <li>Printers & Scanners</li>
+                <Link
+                  to="/products"
+                  state={{ category: "Gaming Monitors" }}
+                  className="cursor-pointer"
+                >
+                  Gaming Monitors
+                </Link>
 
-                <li>PC Parts</li>
-
-                <li>All Other Products</li>
-
-                <li>Repairs</li>
+                <Link
+                  to="/products"
+                  state={{ category: "PC Parts" }}
+                  className="cursor-pointer"
+                >
+                  PC Parts
+                </Link>
               </ul>
 
               <button className="border-2 rounded-3xl px-6 py-1 text-[#0156FF] border-[#0156FF] bg-white md:px-48 lg:px-6 ">
@@ -150,9 +177,11 @@ export default function Navbar() {
                 {!showSearch ? <SearchIcon /> : <CloseIcon />}
               </div>
 
-              <Badge badgeContent={itemsInCart} color="secondary">
-                <ShoppingCartIcon color="action" />
-              </Badge>
+              <Link to="/shopping-cart">
+                <Badge badgeContent={itemsInCart} color="secondary">
+                  <ShoppingCartIcon color="action" />
+                </Badge>
+              </Link>
 
               <div className="relative">
                 <div
@@ -209,33 +238,33 @@ export default function Navbar() {
 
           <nav>
             <ul className="text-sm font-normal py-3 flex flex-col gap-2">
-              <li className="flex items-center justify-between">
-                Laptops <ChevronRightIcon />{" "}
-              </li>
+              <Link className="flex items-center justify-between cursor-pointer">
+                Laptops <ChevronRightIcon />
+              </Link>
 
-              <li className="flex items-center justify-between">
+              <Link className="flex items-center justify-between cursor-pointer">
                 Desktop PC <ChevronRightIcon />
-              </li>
+              </Link>
 
-              <li className="flex items-center justify-between">
-                Networking Devices <ChevronRightIcon />{" "}
-              </li>
+              <Link className="flex items-center justify-between cursor-pointer">
+                Networking Devices <ChevronRightIcon />
+              </Link>
 
-              <li className="flex items-center justify-between">
-                Printers & Scanners <ChevronRightIcon />{" "}
-              </li>
+              <Link className="flex items-center justify-between cursor-pointer">
+                Printers & Scanners <ChevronRightIcon />
+              </Link>
 
-              <li className="flex items-center justify-between">
-                PC Parts <ChevronRightIcon />{" "}
-              </li>
+              <Link className="flex items-center justify-between cursor-pointer">
+                PC Parts <ChevronRightIcon />
+              </Link>
 
-              <li className="flex items-center justify-between">
-                All Other Products <ChevronRightIcon />{" "}
-              </li>
+              <Link className="flex items-center justify-between cursor-pointer">
+                All Other Products <ChevronRightIcon />
+              </Link>
 
-              <li className="flex items-center justify-between">
-                Repiars <ChevronRightIcon />{" "}
-              </li>
+              <Link className="flex items-center justify-between cursor-pointer">
+                Repiars <ChevronRightIcon />
+              </Link>
             </ul>
           </nav>
 

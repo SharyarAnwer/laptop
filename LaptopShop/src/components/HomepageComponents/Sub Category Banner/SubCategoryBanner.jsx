@@ -11,7 +11,7 @@ export default function SubCategoryBanner(prop) {
           {prop.heading}
         </h1>
 
-        <Link to="/" className="text-white underline text-sm md:text-center">
+        <Link to="/products" state = {{category : prop.category}} className="text-white underline text-sm md:text-center">
           See All Products
         </Link>
       </div>

@@ -18,12 +18,17 @@ import SelectedFilterButton from "../Selected-Filter-Button/SelectedFilterButton
 // This is simply a button to change products view from grid to list or vice versa
 import ListGridToggle from "../List-Grid-Toggle-Button/ListGridToggle";
 
+import { useLocation } from "react-router-dom";
+
 export default function Products(prop) {
+
+  const { state } = useLocation()
 
   return (
     <div className="px-4">
 
-      <h1 className="text-lg font-semibold">MSI PS SERIES (20)</h1>
+      {/* <h1 className="text-lg font-semibold">MSI PS SERIES (20)</h1> */}
+      <h1 className="text-lg font-semibold">{state.category}</h1>
 
       <div className="flex gap-4">
 
@@ -96,7 +101,7 @@ export default function Products(prop) {
 
           <SelectedFilterButton/>
 
-          <ProductCard />
+          <ProductCard category = {state.category} />
         </div>
       </div>
     </div>

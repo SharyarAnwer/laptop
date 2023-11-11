@@ -1,12 +1,10 @@
 import React from "react";
 
-import Pricing from "../../Pricing-Bar/Pricing";
-
-export default function Spec() {
+export default function Spec(prop) {
   return (
     <div className="px-4 min-w-full">
 
-      <h1 className="text-2xl font-medium">MSI MPG Trident 3</h1>
+      <h1 className="text-2xl font-medium">{prop.product.Name}</h1>
 
       <p className="text-xs text-[#0156FF] my-3">
         Be the first to review this product

@@ -8,6 +8,9 @@ import PayPal from "./Paypal.svg";
 import SelectorButtons from "../About-Details-Specs/SelectorButton/SelectorButtons";
 
 export default function Pricing(prop) {
+
+  console.log("Price" , prop.product)
+
   return (
     <div className="flex flex-col gap-2 px-4 my-2 md:mb-0 shadow-lg pb-5 relative z-20 bg-white">
       <div className="flex items-center justify-between gap-2">
@@ -40,7 +43,7 @@ export default function Pricing(prop) {
       <div className="bg-[#F5F7FF] py-2 flex items-center justify-center">
         <p>
           <span>On sale from </span>
-          <span className="font-bold"> $3,299.00</span>
+          <span className="font-bold"> Rs {prop.product.Price}</span>
         </p>
       </div>
     </div>

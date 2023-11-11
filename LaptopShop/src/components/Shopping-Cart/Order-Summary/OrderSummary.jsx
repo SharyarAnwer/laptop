@@ -1,79 +1,57 @@
-import React, { useState } from "react";
+import React from "react";
 
-import productPicture from "./product-picture.svg";
+//Retrieve from the store all the items have been added to the cart
+import { useSelector , useDispatch } from "react-redux";
 
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+// This is the reducer responsible to update shopping cart
+import { updateCart } from "../../../redux/CartSlice";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-import CancelIcon from "@mui/icons-material/Cancel";
-
-import CreateIcon from "@mui/icons-material/Create";
+import OrderedItem from "./OrderedItem";
 
 export default function OrderSummary() {
-  const [counter, setCounter] = useState(1);
+
+  // This will hold all the cart items after they have been updated
+  let updatedCart = [];
+
+  //This function holds the updated Cart items
+  // The logic:
+  // 1) Check if the product exist in the array or not
+  // 2) If it exists than just update it else add it as a new product
+  const updateItemsInCart = (updatedProduct) => {
+    const productFound = updatedCart.find(
+      (item) => item._id === updatedProduct._id
+    );
+
+    if (productFound) {
+      const index = updatedCart.indexOf(productFound);
+
+      updatedCart[index] = updatedProduct;
+    } else {
+      updatedCart.push(updatedProduct);
+    }
+  };
+
+  //Retrieve from the store all the items that have been added to the cart
+  const itemsInCart = useSelector((state) => state.cart.cart.products);
+
+  const dispatch = useDispatch();
+
+  const updateShoppingCart = () => {
+
+    dispatch(updateCart({updatedCart : updatedCart}))
+
+  }
 
   return (
     <div className="px-4 flex flex-col items-center">
-      <div className="flex flex-col gap-3 my-4 ">
-        <div className="flex items-start gap-4">
-          <img src={productPicture} />
+      {itemsInCart.map((element) => (
+        <OrderedItem Product={element} updateItemsInCart={updateItemsInCart} />
+      ))}
 
-          <p className="text-xs">
-            MSI MEG Trident X 10SD-1012AU Intel i7 10700K, 2070 SUPER, 32GB RAM,
-            1TB SSD, Windows 10 Home, Gaming Keyboard and Mouse 3 Years Warranty
-          </p>
-        </div>
-
-        <div className="flex gap-2 justify-between border-b-2 pb-5">
-          <div>
-            <h1 className="font-semibold">Price</h1>
-            <h6 className="font-bold">$4,349.00</h6>
-          </div>
-
-          <div>
-            <h1 className="font-semibold">Qty</h1>
-
-            <div className="w-12 aspect-square bg-[#F5F7FF] flex rounded-md mt-1">
-              <h6 className="w-3/4 h-full flex items-center justify-center font-bold">
-                {counter}
-              </h6>
-
-              <button className="w-1/4 flex flex-col justify-center items-center">
-                <button
-                  onClick={() => {
-                    setCounter(counter + 1);
-                  }}
-                >
-                  <ExpandLessIcon sx={{ fontSize: "12px" }} />
-                </button>
-
-                <button
-                  onClick={() => {
-                    setCounter(counter - 1);
-                  }}
-                >
-                  <ExpandMoreIcon sx={{ fontSize: "12px" }} />
-                </button>
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <h6 className="font-semibold">Sub total</h6>
-
-            <h4 className="font-bold">$13,047.00</h4>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <CancelIcon sx={{ color: "#A1A1A1" }} />
-
-            <CreateIcon sx={{ color: "#A1A1A1" }} />
-          </div>
-        </div>
-      </div>
-
-      <button className="bg-[#000000] text-white px-4 py-2 rounded-full font-semibold">
+      <button
+        className="bg-[#000000] text-white px-4 py-2 rounded-full font-semibold"
+        onClick={updateShoppingCart}
+      >
         Update Shopping Cart
       </button>
     </div>

@@ -68,6 +68,7 @@ export default function Desktops() {
         <div className="flex flex-col md:flex-col-reverse">
           <SubCategoryBanner
             heading="Desktops"
+            category="Desktops"
             backgroundImageMobile="bg-desktop-mobile"
             backgroundImageTablet="md:bg-desktop-tablet"
           />

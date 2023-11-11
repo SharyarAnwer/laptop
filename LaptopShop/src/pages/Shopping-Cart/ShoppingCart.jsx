@@ -6,7 +6,6 @@ import Cart from "../../components/Shopping-Cart/Cart/Cart";
 
 import OrderSummary from "../../components/Shopping-Cart/Order-Summary/OrderSummary";
 
-
 export default function ShoppingCart() {
   
   return (

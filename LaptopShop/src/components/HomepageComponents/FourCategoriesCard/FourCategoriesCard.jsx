@@ -6,7 +6,8 @@ import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Chip from "@mui/joy/Chip";
-import Link from "@mui/joy/Link";
+// import Link from "@mui/joy/Link";
+import { Link } from "react-router-dom";
 import Typography from "@mui/joy/Typography";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import Rating from "@mui/material/Rating";
@@ -49,16 +50,16 @@ export default function FourCategoriesCard(prop) {
                 </CardOverflow>
                 <CardContent>
                   <Typography level="body-xs">Bluetooth Headset</Typography>
-                  <Link
-                    href="#product-card"
-                    fontWeight="md"
-                    color="neutral"
-                    textColor="text.primary"
-                    overlay
-                    endDecorator={<ArrowOutwardIcon />}
-                  >
-                    {element.Name}
-                  </Link>
+                  <div className="flex items-center">
+                    <Link
+                      to="/about-product"
+                      className="font-semibold text-black"
+                      state={{ product: element }}
+                    >
+                      {element.Name}
+                    </Link>
+                    <ArrowOutwardIcon sx={{ color: "black" }} />
+                  </div>
 
                   <Typography
                     level="title-lg"
@@ -74,7 +75,7 @@ export default function FourCategoriesCard(prop) {
                       </Chip>
                     }
                   >
-                    $ {element.Price}
+                    Rs {element.Price}
                   </Typography>
                   <Typography level="body-sm">
                     (Only <b>{element.Quantity}</b> left in stock!)

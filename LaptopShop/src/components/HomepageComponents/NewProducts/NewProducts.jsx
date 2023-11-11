@@ -12,7 +12,7 @@ export default function NewProducts() {
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-lg">New Products</h1>
 
-        <Link to="/" className="text-xs text-[#0156FF] underline">
+        <Link to="/products" state = {{category : "New Products"}} className="text-xs text-[#0156FF] underline">
           See All New Products
         </Link>
       </div>

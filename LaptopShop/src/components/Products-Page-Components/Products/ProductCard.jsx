@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import AspectRatio from "@mui/joy/AspectRatio";
 import Button from "@mui/joy/Button";
@@ -15,10 +15,83 @@ import Pagination from "@mui/material/Pagination";
 // useSelector hook is used to extract data from redux store
 import { useSelector } from "react-redux";
 
-export default function ProductCard() {
+import axios from "axios";
+
+export default function ProductCard(prop) {
   // The logic that we should display the products in grid or in list is defined in ListGridToggle.jsx.
   // The view type is stored in redux and then extracted here
   const productView = useSelector((state) => state.productView.view);
+
+  // This entire block fetches the data from the API and saves it into newProducts array
+  const [newProducts, setNewProducts] = useState([]);
+
+  const category = prop.category;
+
+  if (category == "New Products") {
+    const url = "http://localhost:5000/products/get-new-products";
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(url);
+
+          setNewProducts(response.data.response);
+
+          console.log(newProducts);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+    }, []);
+  } else {
+    const url = "http://localhost:5000/products/get-product";
+
+    useEffect(() => {
+      const fetchProduct = async () => {
+        try {
+          //Axios requests can continue to run in the background even after the component unmounts.
+          const controller = new AbortController();
+
+          const response = await axios.post(
+            "http://localhost:5000/products/get-product",
+            {
+              Category: category,
+              signal: controller.signal,
+            }
+          );
+
+          setNewProducts(response.data.response);
+
+          //This is a clean up function. After the data has been received, tell the server to stop processing the request.
+          return () => {
+            controller.abort();
+          };
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchProduct();
+    }, []);
+  }
+
+  // This block fetches the data from the API and saves it into newProducts array
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = newProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const handlePagination = (e, value) => {
+    setCurrentPage(e.target.innerText);
+  };
 
   return (
     <>
@@ -27,9 +100,12 @@ export default function ProductCard() {
           productView.view == "module" ? "gap-2" : "gap-4"
         }`}
       >
-        {Array(20)
-          .fill(1)
-          .map(() => (
+        {currentProducts.length <= 0 ? (
+          <div>
+            <h1 className="text-3xl">No Products Are Available In This Category</h1>
+          </div>
+        ) : (
+          currentProducts.map((element, index) => (
             <>
               <Card
                 sx={{
@@ -41,8 +117,8 @@ export default function ProductCard() {
                 <CardOverflow>
                   <AspectRatio sx={{ minWidth: 100 }}>
                     <img
-                      src="https://images.unsplash.com/photo-1593121925328-369cc8459c08?auto=format&fit=crop&w=286"
-                      srcSet="https://images.unsplash.com/photo-1593121925328-369cc8459c08?auto=format&fit=crop&w=286&dpr=2 2x"
+                      src={element.Picture}
+                      srcSet={element.Picture}
                       loading="lazy"
                       alt=""
                     />
@@ -50,7 +126,7 @@ export default function ProductCard() {
                 </CardOverflow>
                 <CardContent>
                   <Typography level="body-xs" sx={{ fontSize: "12px" }}>
-                    Bluetooth Headset
+                    {element.Category}
                   </Typography>
                   <Link
                     href="#product-card"
@@ -61,7 +137,7 @@ export default function ProductCard() {
                     className="text-xs font-normal"
                     //   endDecorator={<ArrowOutwardIcon />}
                   >
-                    Super Rockez A400
+                    {element.Name}
                   </Link>
 
                   <Typography
@@ -78,7 +154,7 @@ export default function ProductCard() {
                     //     </Chip>
                     //   }
                   >
-                    $ 499.00
+                    Rs {element.Price}
                   </Typography>
                   {/* <Typography level="body-sm">
                   (Only <b>7</b> left in stock!)
@@ -88,7 +164,7 @@ export default function ProductCard() {
                 <div className="flex">
                   <Rating
                     name="read-only"
-                    value={4}
+                    value={element.Rating}
                     readOnly
                     sx={{ fontSize: "15px" }}
                   />
@@ -101,11 +177,17 @@ export default function ProductCard() {
                 </CardOverflow>
               </Card>
             </>
-          ))}
+          ))
+        )}
       </div>
 
       <div className="px-4 flex justify-center">
-        <Pagination count={10} variant="outlined" sx={{ color: "#F5F7FF" }} />
+        <Pagination
+          count={Math.ceil(newProducts.length / 10)}
+          variant="outlined"
+          sx={{ color: "#F5F7FF" }}
+          onClick={handlePagination}
+        />
       </div>
 
       {/* Compare products section. */}

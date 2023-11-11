@@ -51,7 +51,7 @@ export default function CustomBuild() {
           Custom Builds
         </h1>
 
-        <Link to="/" className="text-white underline text-sm md:text-center">
+        <Link to="/products" state = {{category : "Custom Build"}} className="text-white underline text-sm md:text-center">
           See All Products
         </Link>
       </div>

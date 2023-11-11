@@ -65,6 +65,7 @@ export default function MSILaptop() {
         <div className="flex flex-col md:flex-col-reverse">
           <SubCategoryBanner
             heading="MSI Laptops"
+            category="MSI-Laptops"
             backgroundImageMobile="bg-msi-mobile"
             backgroundImageTablet="md:bg-msi-tablet"
           />

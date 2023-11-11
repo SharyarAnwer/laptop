@@ -11,6 +11,7 @@ import Contact from "../../components/HomepageComponents/Contact Section/Contact
 import Footer from "../../components/Footer/Footer";
 
 import Filter from "../../components/Products-Page-Components/Filter/Filter";
+
 import TabletBanner from "../../components/Products-Page-Components/Tablet-Banner/TabletBanner";
 
 export default function Products() {
