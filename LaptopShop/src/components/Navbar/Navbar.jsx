@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import MobileLogo from "./MobileLogo.svg";
 
@@ -44,7 +44,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   //Retrieve from the store how many items have been added to the cart
-  const itemsInCart = useSelector((state) => state.cart.cart.items);
+  const itemsInCart = useSelector((state) => state.cart.cart.items)
 
   //This shows if I need to show shop timing or not
   const [showShop, setShowShop] = useState(false);

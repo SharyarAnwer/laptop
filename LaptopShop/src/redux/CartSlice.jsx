@@ -57,6 +57,8 @@ const cartSlice  = createSlice({
 
             state.cart.items = action.payload.updatedCart.length
 
+            action.payload.updatedCart.forEach(element => console.log(element.quantityOrdered))
+
             state.cart.products = action.payload.updatedCart
             
         }
